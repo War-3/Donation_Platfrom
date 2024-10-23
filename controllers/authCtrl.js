@@ -22,8 +22,11 @@ exports.registerFxn = async (req, res) => {
         const newUser = new User({name,email,password: hashedPassword,role})
 
         await newUser.save()
-
-        res.status(200).send("User registered successfully")
+        return res.status(200).json({
+            message: "Registration Successful",
+            user: newUser
+        });
+        
     } catch (error) {
         console.error(error)
         res.status(500).send("Server error")
@@ -44,8 +47,7 @@ exports.loginFxn = async (req, res) => {
             return res.status(400).json({ error: "Invalid email or password"})
         }
 
-        const accessToken = jwt.sign( {user }, `${process.env.ACCESS_TOKEN}`, {expiresIn: "20m"})
-
+        const accessToken = jwt.sign({user},   `${process.env.ACCESS_TOKEN}`, { expiresIn: '20m' });
         const refreshToken = jwt.sign({user}, `${process.env.REFRESH_TOKEN}`, {expiresIn: "1d"})
 
         res.status(200).json({ message: "Login successful", accessToken, user})
@@ -54,4 +56,5 @@ exports.loginFxn = async (req, res) => {
     }
 
 }
+
 

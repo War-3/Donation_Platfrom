@@ -3,11 +3,9 @@ const { check, validationResult } = require('express-validator');
 // Validate Registrstion
 const validateRegistration = [
   
-    check('firstName')
-      .notEmpty().withMessage('First Name is required'),
-      check('lastName')
-      .notEmpty().withMessage('Last Name is required'),
-    
+    check('name')
+      .notEmpty().withMessage('Name is required'),
+          
     check('email')
       .isEmail().withMessage('Invalid email format')
       .notEmpty().withMessage('Email is required'),

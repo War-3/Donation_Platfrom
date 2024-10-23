@@ -2,6 +2,7 @@ const express = require("express");
 const {
   registerFxn,
   loginFxn,
+  authFxn
 } = require("../controllers/authCtrl");
 const {
   createCauseFxn,
@@ -16,7 +17,8 @@ const {
   updateRaisedAmountFxn,
   verifyPaymentFxn,
 } = require("../controllers/donationCtrl");
-const { authenticateJWT } = require("../middleware/authMiddleware");
+
+const { authenticateJWT } = require("../middleware/authMiddleware")
 const { validateLogin } = require("../middleware/loginValidation");
 const { validateRegistration } = require("../middleware/registrationValidation");
 
@@ -40,18 +42,28 @@ const router = express.Router();
 // Auth Routes
 router.post("/register", validateRegistration, registerFxn);
 router.post("/login", validateLogin, loginFxn);
+// router.post("/auth",authFxn)
 
 // Cause Routes
-router.post("/causes", authenticateJWT, createCauseFxn);
-router.get("/causes", getAllCausesFxn);
-router.get("/causes/:id", getCauseByIdFxn); // Authentication removed if public
-router.put("/causes/:id", authenticateJWT, updateCauseFxn);
-router.delete("/causes/:id", authenticateJWT, deleteCauseFxn);
+router.post('/cause',  createCauseFxn);
+router.get('/causes',  getAllCausesFxn);
+router.get('/cause/:id',  getCauseByIdFxn);
+router.put('/cause/:id', updateCauseFxn);
+router.delete('/cause/:id', deleteCauseFxn);
 
 // Donation Routes
-router.post("/donations", authenticateJWT, initiateDonationFxn);
+router.post("/donations",  initiateDonationFxn);
 router.get("/donations", getAllDonationsFxn);
-router.put("/donations", authenticateJWT, updateRaisedAmountFxn);
+router.put("/donations",  updateRaisedAmountFxn);
 router.get("/verify-payment/:reference", verifyPaymentFxn);
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
