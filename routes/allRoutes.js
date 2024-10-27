@@ -8,6 +8,7 @@ const {
   createCauseFxn,
   getAllCausesFxn,
   getCauseByIdFxn,
+  getCauseByOrganizerIDFxn,
   updateCauseFxn,
   deleteCauseFxn,
 } = require("../controllers/causeCtrl");
@@ -18,7 +19,7 @@ const {
   verifyPaymentFxn,
 } = require("../controllers/donationCtrl");
 
-const { authenticateJWT } = require("../middleware/authMiddleware")
+// const { authenticateJWT } = require("../middleware/authMiddleware")
 const { validateLogin } = require("../middleware/loginValidation");
 const { validateRegistration } = require("../middleware/registrationValidation");
 
@@ -42,12 +43,13 @@ const router = express.Router();
 // Auth Routes
 router.post("/register", validateRegistration, registerFxn);
 router.post("/login", validateLogin, loginFxn);
-// router.post("/auth",authFxn)
+router.post("/auth",authFxn)
 
 // Cause Routes
 router.post('/cause',  createCauseFxn);
 router.get('/causes',  getAllCausesFxn);
 router.get('/cause/:id',  getCauseByIdFxn);
+router.get('/causes/organizer', getCauseByOrganizerIDFxn);
 router.put('/cause/:id', updateCauseFxn);
 router.delete('/cause/:id', deleteCauseFxn);
 

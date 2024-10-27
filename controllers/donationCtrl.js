@@ -24,7 +24,7 @@ exports.initiateDonationFxn = async (req, res) => {
             cause.raised_amount += amount;
             await cause.save();
 
-            const donation = await Donation.findOne({ _id: payment.reference });
+            const donation = await Donation.findOne({ user_id: payment.reference });
             if (!donation) {
                 return res.status(404).json({ error: 'Donation not found' });
             }
@@ -49,9 +49,9 @@ exports.initiateDonationFxn = async (req, res) => {
             await donation.save();
 
             const paymentRes = await initializePayment({
-                amount: amount * 100, // Amount in kobo
+                amount: amount * 1750, // Amount in Niara
                 email: user.email,
-                reference: donation._id.toString(),
+                reference: donation.user_id.toString(),
                 callback_url: `${process.env.FRONTEND_URL}/payment-success`,
             });
 

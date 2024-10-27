@@ -49,7 +49,9 @@ exports.createCauseFxn = async (req, res) => {
 exports.getAllCausesFxn = async (req, res) => {
   try {
     const causes = await Cause.find();
-    return res.status(200).json(causes);
+    const count = causes.length;
+
+    return res.status(200).json({message: "Total Number of Donors are "+ count,  data: causes });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Failed to retrieve causes" });
@@ -69,6 +71,29 @@ exports.getCauseByIdFxn = async (req, res) => {
     return res.status(500).json({ error: "Failed to retrieve cause" });
   }
 };
+
+// Query that Filter out Organizer by ID
+exports.getCauseByOrganizerIDFxn = async (req, res) => {
+  try {
+    const { organizer } = req.query;
+
+    if (!organizer) {
+      return res.status(400).json({ error: "Organizer ID is required" });
+    }
+
+    const causes = await Cause.find({ organizer });
+
+    if (causes.length === 0) {
+      return res.status(404).json({ error: "No causes found for this organizer" });
+    }
+
+    return res.status(200).json({ count: causes.length, data: causes });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to retrieve causes" });
+  }
+};
+
 
 // Update cause authorization and handling logic
 exports.updateCauseFxn = async (req, res) => {
