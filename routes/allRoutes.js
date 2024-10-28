@@ -20,23 +20,8 @@ const {
 } = require("../controllers/donationCtrl");
 
 // const { authenticateJWT } = require("../middleware/authMiddleware")
-const { validateLogin } = require("../middleware/loginValidation");
+const {validateLogin} = require("../middleware/loginValidation");
 const { validateRegistration } = require("../middleware/registrationValidation");
-
-// console.log({
-//   registerFxn,
-//   loginFxn,
-//   createCauseFxn,
-//   getAllCausesFxn,
-//   getCauseByIdFxn,
-//   updateCauseFxn,
-//   deleteCauseFxn,
-//   initiateDonationFxn,
-//   getAllDonationsFxn,
-//   updateRaisedAmountFxn,
-//   verifyPaymentFxn,
-// }); // Log to identify undefined imports
-
 
 const router = express.Router();
 
